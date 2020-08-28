@@ -12,7 +12,22 @@ export class DroneService {
 
   async getAll() {
     const drones = await this.droneRepo.find();
-    return drones;
+
+    const serializedDrones = drones.map(drone => {
+      return {
+        id: drone.id,
+        image: `http://localhost:${process.env.PORT}/files/${drone.image}`,
+        name: drone.name,
+        address: drone.address,
+        battery: drone.battery,
+        max_speed: drone.max_speed,
+        average_speed: drone.average_speed,
+        status: drone.status,
+        fly: drone.fly,
+      };
+    });
+
+    return serializedDrones;
   }
 
   async saveDrone(data: StoreDTO) {

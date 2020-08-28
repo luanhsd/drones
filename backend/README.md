@@ -12,7 +12,7 @@ $ yarn install
 
 ## Environment Variables Settings
 
-create the .env file and copy the keys defined in .env.example
+create the .env file and copy the defined keys in .env.example
 
 ```bash
 #APPLICATION SETTINGS
