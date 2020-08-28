@@ -1,21 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { StoreDTO } from 'src/models/drone.model';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DroneEntity } from 'src/entities/drone.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class DroneService {
-  private mockDrone = {
-    id: 1,
-    image: 'https://robohash.org/verovoluptatequia.jpg',
-    name: 'Suzann',
-    address: '955 Springview Junction',
-    battery: 90,
-    max_speed: 3.8,
-    average_speed: 11.6,
-    status: 'failed',
-    fly: 94,
-  };
+  constructor(
+    @InjectRepository(DroneEntity) private droneRepo: Repository<DroneEntity>,
+  ) {}
 
-  save(data: StoreDTO) {
-    return this.mockDrone;
-  }
+  async save(data: StoreDTO) {}
 }

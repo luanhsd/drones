@@ -5,10 +5,11 @@ import {
   IsNumber,
   Min,
   Max,
+  IsOptional,
 } from 'class-validator';
 
 export class StoreDTO {
-  @IsNotEmpty({ message: 'campo image obrigatório' })
+  @IsOptional()
   @IsString({ message: 'campo image precisa ser uma string' })
   image: string;
 
