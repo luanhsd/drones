@@ -10,7 +10,12 @@ export class DroneService {
     @InjectRepository(DroneEntity) private droneRepo: Repository<DroneEntity>,
   ) {}
 
-  async save(data: StoreDTO) {
+  async getAll() {
+    const drones = await this.droneRepo.find();
+    return drones;
+  }
+
+  async saveDrone(data: StoreDTO) {
     try {
       const drone = this.droneRepo.create(data);
       await drone.save();
@@ -27,5 +32,14 @@ export class DroneService {
     return drone;
   }
 
-  async update(id: number, data: UpdateDTO) {}
+  async updateDrone(id: number, data: UpdateDTO) {
+    const drone = await this.findById(id);
+    await this.droneRepo.update({ id }, data);
+    return await this.findById(id);
+  }
+
+  async deleteDrone(id: number) {
+    const drone = await this.findById(id);
+    await this.droneRepo.remove(drone);
+  }
 }

@@ -16,7 +16,9 @@ export class DroneController {
   constructor(private droneService: DroneService) {}
 
   @Get()
-  index() {}
+  index() {
+    return this.droneService.getAll();
+  }
 
   @Get('/:id')
   show(@Param('id') id: number) {
@@ -25,14 +27,16 @@ export class DroneController {
 
   @Post()
   store(@Body(ValidationPipe) data: StoreDTO) {
-    return this.droneService.save(data);
+    return this.droneService.saveDrone(data);
   }
 
   @Put('/:id')
   update(@Param('id') id: number, @Body(ValidationPipe) data: UpdateDTO) {
-    return this.droneService.update(id, data);
+    return this.droneService.updateDrone(id, data);
   }
 
   @Delete('/:id')
-  delete(@Param('/:id') id: number) {}
+  delete(@Param('id') id: number) {
+    return this.droneService.deleteDrone(id);
+  }
 }
