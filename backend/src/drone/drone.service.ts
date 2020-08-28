@@ -1,5 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { StoreDTO } from 'src/models/drone.model';
+import { StoreDTO, UpdateDTO } from 'src/models/drone.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DroneEntity } from 'src/entities/drone.entity';
 import { Repository } from 'typeorm';
@@ -11,13 +11,21 @@ export class DroneService {
   ) {}
 
   async save(data: StoreDTO) {
-    console.log(data);
     try {
       const drone = this.droneRepo.create(data);
       await drone.save();
       return drone;
     } catch (error) {
-      throw new InternalServerErrorException();
+      throw new InternalServerErrorException(
+        'favor verificar estrutura de dados',
+      );
     }
   }
+
+  async findById(id: number) {
+    const drone = await this.droneRepo.findOne({ where: { id } });
+    return drone;
+  }
+
+  async update(id: number, data: UpdateDTO) {}
 }

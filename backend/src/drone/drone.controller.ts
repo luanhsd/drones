@@ -19,7 +19,9 @@ export class DroneController {
   index() {}
 
   @Get('/:id')
-  show(@Param('id') id: number) {}
+  show(@Param('id') id: number) {
+    return this.droneService.findById(id);
+  }
 
   @Post()
   store(@Body(ValidationPipe) data: StoreDTO) {
@@ -27,7 +29,9 @@ export class DroneController {
   }
 
   @Put('/:id')
-  update(@Param('id') id: number, @Body(ValidationPipe) data: UpdateDTO) {}
+  update(@Param('id') id: number, @Body(ValidationPipe) data: UpdateDTO) {
+    return this.droneService.update(id, data);
+  }
 
   @Delete('/:id')
   delete(@Param('/:id') id: number) {}

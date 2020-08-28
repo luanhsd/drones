@@ -18,7 +18,6 @@ export class DroneEntity extends AbstractEntity {
 
   @Column({
     type: 'decimal',
-    name: 'max_speed',
     default: 0.0,
     precision: 5,
     scale: 1,
@@ -27,7 +26,6 @@ export class DroneEntity extends AbstractEntity {
 
   @Column({
     type: 'decimal',
-    name: 'average_speed',
     default: 0.0,
     precision: 5,
     scale: 1,
