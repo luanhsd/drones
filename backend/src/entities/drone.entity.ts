@@ -16,11 +16,23 @@ export class DroneEntity extends AbstractEntity {
   @Column({ default: 0 })
   battery: Number;
 
-  @Column({ name: 'max_speed', default: 0.0 })
-  maxSpeed: Number;
+  @Column({
+    type: 'decimal',
+    name: 'max_speed',
+    default: 0.0,
+    precision: 5,
+    scale: 1,
+  })
+  max_speed: Number;
 
-  @Column({ name: 'average_speed', default: 0.0 })
-  averageSpeed: Number;
+  @Column({
+    type: 'decimal',
+    name: 'average_speed',
+    default: 0.0,
+    precision: 5,
+    scale: 1,
+  })
+  average_speed: Number;
 
   @Column({ default: 'offline' })
   status: string;
