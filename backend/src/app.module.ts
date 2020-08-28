@@ -3,12 +3,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseService } from './database.service';
+import { DroneModule } from './drone/drone.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       useClass: DatabaseService,
     }),
+    DroneModule,
   ],
   controllers: [AppController],
   providers: [AppService],
