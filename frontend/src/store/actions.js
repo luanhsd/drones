@@ -1,9 +1,10 @@
 import * as types from './mutation-types';
+import api from '../services/api';
 
 export const getDrones = ({
   commit,
 }) => {
-  this.$api.get('drones')
+  api.get('drones')
     .then((response) => {
       commit(types.GET_DRONES, response.data);
     });
