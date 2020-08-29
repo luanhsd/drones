@@ -1,12 +1,7 @@
 <template>
   <div>
-  <b-navbar toggleable="lg" variant="light" class="teste">
-    <b-navbar-brand href="#">
-      <img
-      src="../assets/logo.svg"
-      width="100"
-      height="60"
-      class="d-inline-block align-top" alt="Kitten">
+  <b-navbar toggleable="lg" type="dark" variant="primary" class="my-navbar">
+    <b-navbar-brand href="#">onDrone
     </b-navbar-brand>
 
   </b-navbar>
@@ -21,7 +16,8 @@ export default {
 </script>
 
 <style>
-.teste{
+.my-navbar {
+   box-shadow: 0 0.25rem 0.25rem rgba(0,0,0,.25), inset 0 -1px 5px rgba(0,0,0,.25);
   display: flex;
   justify-content: center;
   align-items: center;

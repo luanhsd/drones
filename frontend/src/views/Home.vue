@@ -1,26 +1,28 @@
 <template>
   <main-template>
-    <div>
-  <b-form inline>
-    <label class="sr-only" for="inline-form-input-name">Name</label>
-    <b-input
-      id="inline-form-input-name"
-      class="mb-2 mr-sm-2 mb-sm-0"
-      placeholder="Jane Doe"
-    ></b-input>
+    <b-row>
+      <b-form inline>
+        <label class="sr-only" for="inline-form-input-name">Name</label>
+        <b-input
+          id="inline-form-input-name"
+          class="mb-2 mr-sm-2 mb-sm-0"
+          placeholder="Jane Doe"
+        ></b-input>
 
-    <label class="sr-only" for="inline-form-input-username">Username</label>
-    <b-input-group prepend="@" class="mb-2 mr-sm-2 mb-sm-0">
-      <b-input id="inline-form-input-username" placeholder="Username"></b-input>
-    </b-input-group>
+        <label class="sr-only" for="inline-form-input-username">Username</label>
+        <b-input-group prepend="@" class="mb-2 mr-sm-2 mb-sm-0">
+          <b-input id="inline-form-input-username" placeholder="Username"></b-input>
+        </b-input-group>
 
-    <b-form-checkbox class="mb-2 mr-sm-2 mb-sm-0">Remember me</b-form-checkbox>
+        <b-form-checkbox class="mb-2 mr-sm-2 mb-sm-0">Remember me</b-form-checkbox>
 
-    <b-button variant="primary">Save</b-button>
-  </b-form>
-</div>
+        <b-button variant="primary">Save</b-button>
+      </b-form>
+    </b-row>
 
-    <b-table striped hover :items="items"></b-table>
+    <b-row>
+      <b-table striped hover :items="items"></b-table>
+    </b-row>
   </main-template>
 </template>
 

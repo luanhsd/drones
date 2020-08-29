@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <navbar/>
-    <b-container class="main-container">
+    <b-container fluid class="main-container">
       <slot/>
     </b-container>
   </div>
@@ -20,9 +20,8 @@ export default {
 
 <style>
 .main-container{
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
 }
 </style>
