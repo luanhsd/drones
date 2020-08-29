@@ -30,9 +30,15 @@ export class DroneService {
     return serializedDrones;
   }
 
-  async saveDrone(data: StoreDTO) {
+  async saveDrone(data: StoreDTO, image: any) {
     try {
       const drone = this.droneRepo.create(data);
+      if (image !== undefined) {
+        drone.image = image.filename;
+        await drone.save();
+        drone.image = `http://localhost:${process.env.PORT}/files/${drone.image}`;
+        return drone;
+      }
       await drone.save();
       return drone;
     } catch (error) {
@@ -44,13 +50,26 @@ export class DroneService {
 
   async findById(id: number) {
     const drone = await this.droneRepo.findOne({ where: { id } });
+    drone.image = `http://localhost:${process.env.PORT}/files/${drone.image}`;
     return drone;
   }
 
-  async updateDrone(id: number, data: UpdateDTO) {
-    const drone = await this.findById(id);
-    await this.droneRepo.update({ id }, data);
-    return await this.findById(id);
+  async updateDrone(id: number, data: UpdateDTO, image: any) {
+    try {
+      if (image !== undefined) {
+        //data.image = image.filename;
+        await this.droneRepo.update({ id }, { ...data, image: image.filename });
+        return await this.findById(id);
+      } else {
+        await this.droneRepo.update({ id }, { ...data });
+        return await this.findById(id);
+      }
+    } catch (error) {
+      console.log(error);
+      throw new InternalServerErrorException(
+        'favor verificar estrutura de dados',
+      );
+    }
   }
 
   async deleteDrone(id: number) {

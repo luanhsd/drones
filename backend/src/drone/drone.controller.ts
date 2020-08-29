@@ -7,9 +7,13 @@ import {
   Param,
   Delete,
   ValidationPipe,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { DroneService } from './drone.service';
 import { StoreDTO, UpdateDTO } from '../models/drone.model';
+import { FileInterceptor } from '@nestjs/platform-express/multer';
+import multer from '../config/multer';
 
 @Controller('drones')
 export class DroneController {
@@ -26,13 +30,19 @@ export class DroneController {
   }
 
   @Post()
-  store(@Body(ValidationPipe) data: StoreDTO) {
-    return this.droneService.saveDrone(data);
+  @UseInterceptors(FileInterceptor('image', multer))
+  store(@Body(ValidationPipe) data: StoreDTO, @UploadedFile() image: any) {
+    return this.droneService.saveDrone(data, image);
   }
 
   @Put('/:id')
-  update(@Param('id') id: number, @Body(ValidationPipe) data: UpdateDTO) {
-    return this.droneService.updateDrone(id, data);
+  @UseInterceptors(FileInterceptor('image', multer))
+  update(
+    @Param('id') id: number,
+    @Body(ValidationPipe) data: UpdateDTO,
+    @UploadedFile() image: any,
+  ) {
+    return this.droneService.updateDrone(id, data, image);
   }
 
   @Delete('/:id')

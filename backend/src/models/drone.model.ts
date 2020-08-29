@@ -13,10 +13,6 @@ export class StoreDTO {
   @IsEmpty({ message: 'campo id não pode ser preenchido!' })
   id: number;
 
-  @IsOptional()
-  @IsString({ message: 'campo image precisa ser uma string' })
-  image: string;
-
   @IsNotEmpty({ message: 'campo name obrigatório' })
   @IsString({ message: 'campo name precisa ser uma string' })
   name: string;
@@ -46,10 +42,6 @@ export class StoreDTO {
 export class UpdateDTO {
   @IsEmpty({ message: 'campo id não pode ser preenchido!' })
   id: number;
-
-  @IsOptional()
-  @IsString({ message: 'campo image precisa ser uma string' })
-  image: string;
 
   @IsNotEmpty({ message: 'campo name obrigatório' })
   @IsString({ message: 'campo name precisa ser uma string' })
