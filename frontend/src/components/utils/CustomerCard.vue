@@ -1,8 +1,10 @@
 <template>
   <div class="customer-card">
-    <b-avatar :src="image"/>
+    <b-avatar :src="image" />
     <div class="details-card">
-      <div class="name"><b>{{ name }}</b></div>
+      <div class="name">
+        <b>{{ name }}</b>
+      </div>
       <div class="address">{{ address }}</div>
     </div>
   </div>
@@ -16,18 +18,18 @@ export default {
 </script>
 
 <style>
-.customer-card{
+.customer-card {
   display: flex;
   justify-content: start;
   align-items: center;
 }
-.details-card{
+.details-card {
   margin-left: 1rem;
 }
-.name{
+.name {
   font-size: 1rem;
 }
-.address{
+.address {
   font-size: 0.5rem;
 }
 </style>

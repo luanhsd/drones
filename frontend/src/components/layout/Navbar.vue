@@ -25,6 +25,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 1rem;
 }
 .logo{
   width: 218.12px;

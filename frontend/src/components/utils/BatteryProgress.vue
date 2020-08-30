@@ -1,11 +1,12 @@
 <template>
   <div class="battery-container">
     <b-progress
-    :value="value"
-    v-b-tooltip.hover
-    max="100"
-    :title="`${value} %`"
-    :variant="setColor"/>
+      :value="value"
+      v-b-tooltip.hover
+      max="100"
+      :title="`${value} %`"
+      :variant="setColor"
+    />
   </div>
 </template>
 
@@ -31,7 +32,7 @@ export default {
 </script>
 
 <style>
-.battery-container{
+.battery-container {
   position: relative;
   top: 0.6rem;
 }

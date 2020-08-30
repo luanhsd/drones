@@ -2,7 +2,7 @@
   <div>
     <b-row class="filter-form">
       <b-form inline>
-        <b-button variant="success" class="new-drone">Novo</b-button>
+        <b-button to="/new" variant="success" class="new-drone">Novo</b-button>
         <label class="sr-only" for="inline-form-input-name">Drone ID</label>
         <b-input
           id="inline-form-input-name"
@@ -40,18 +40,18 @@
             <b-th>STATUS</b-th>
           </b-thead>
           <b-tbody>
-            <b-tr v-for="drone in drones" :key="drone.id">
-              <b-td>{{drone.id}}</b-td>
-              <b-td><customer-card
-                      :image="drone.image"
-                      :name="drone.name"
-                      :address="drone.address"
-                      /></b-td>
-              <b-td><battery-progress :value="drone.battery"/></b-td>
-              <b-td><speed-format :speed="drone.max_speed"/></b-td>
-              <b-td><speed-format :speed="drone.average_speed"/></b-td>
-              <b-td><current-fly :value="drone.fly"/></b-td>
-              <b-td><status :value="drone.status"/></b-td>
+            <b-tr v-for="drone in drones" @click="() => navigateTo(drone.id)" :key="drone.id">
+                <b-td>{{drone.id}}</b-td>
+                <b-td><customer-card
+                        :image="drone.image"
+                        :name="drone.name"
+                        :address="drone.address"
+                        /></b-td>
+                <b-td><battery-progress :value="drone.battery"/></b-td>
+                <b-td><speed-format :speed="drone.max_speed"/></b-td>
+                <b-td><speed-format :speed="drone.average_speed"/></b-td>
+                <b-td><current-fly :value="drone.fly"/></b-td>
+                <b-td><status :value="drone.status"/></b-td>
             </b-tr>
           </b-tbody>
         </b-table-simple>
@@ -77,6 +77,11 @@ export default {
     CurrentFly,
     CustomerCard,
   },
+  methods: {
+    navigateTo(id) {
+      this.$router.push({ name: 'Details', params: { id } });
+    },
+  },
   computed: {
     ...mapGetters([
       'drones',
@@ -90,7 +95,7 @@ export default {
   margin-right: .5rem;
 }
 .filter-form{
-  padding: 1rem 0 2rem 0;
+  padding-bottom:2rem;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -38,12 +38,3 @@ export default {
   text-transform: uppercase;
 }
 </style>
-
-/*
-  SUCCESS
-  DELAYED
-  FLYING
-  FAIL
-  OFFLINE
-  CHARGING
-*/

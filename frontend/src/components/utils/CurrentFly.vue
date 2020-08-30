@@ -1,12 +1,6 @@
 <template>
   <div class="bar-container">
-    <b-input
-      type="range"
-      size="sm"
-      :value="value"
-      min="0"
-      max="100"
-      step="1"/>
+    <b-input type="range" size="sm" :value="value" min="0" max="100" step="1" />
   </div>
 </template>
 
@@ -32,7 +26,7 @@ export default {
 </script>
 
 <style>
-.bar-container{
+.bar-container {
   position: relative;
   top: 0.3rem;
 }

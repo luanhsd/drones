@@ -1,7 +1,7 @@
 <template>
-  <div class='speed-format'>
-    <div class ='number'>{{ splitValue[0] }}</div>
-    <div class ='decimal'>{{ `.${splitValue[1]} m/h` }}</div>
+  <div class="speed-format">
+    <div class="number">{{ splitValue[0] }}</div>
+    <div class="decimal">{{ `.${splitValue[1]} m/h` }}</div>
   </div>
 </template>
 
@@ -18,17 +18,17 @@ export default {
 </script>
 
 <style>
-.speed-format{
+.speed-format {
   display: flex;
   justify-content: center;
   align-items: baseline;
-  font-family: 'Fira Code';
+  font-family: "Fira Code";
 }
-.number{
+.number {
   font-size: 1.5rem;
 }
 
-.decimal{
+.decimal {
   font-size: 1rem;
 }
 </style>
