@@ -7,7 +7,6 @@ import {
   Max,
   IsOptional,
   IsEmpty,
-  IsEnum
 } from 'class-validator';
 import { Type } from 'class-transformer';
 

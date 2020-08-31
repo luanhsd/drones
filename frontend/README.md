@@ -1,24 +1,46 @@
-# frontend
+<p align="center">
+    <a href="http://nestjs.com/" target="blank">
+        <img src="https://user-images.githubusercontent.com/10083265/91772328-0f84e200-ebbb-11ea-81ce-2c4685405d82.png" width="320" alt="Nest Logo" />
+    </a>
+</p>
 
-## Project setup
-```
-yarn install
-```
+## Description
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+front-end : Drones Management Project
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## Installation
 
-### Lints and fixes files
-```
-yarn lint
+```bash
+$ npm install
+# or
+$ yarn install
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Environment Variables Settings
+
+create the .env file and copy the defined keys in .env.example
+
+```bash
+#APIREST SETTINGS
+VUE_APP_CORE_URL=<api_url>
+
+```
+
+## Running the app
+
+```bash
+# development
+$ npm run serve
+
+# production mode
+$ npm run build
+
+
+#WITH YARN
+
+# development
+$ yarn serve
+
+# watch mode
+$ yarn build
+```

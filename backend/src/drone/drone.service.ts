@@ -3,6 +3,7 @@ import { StoreDTO, UpdateDTO } from 'src/models/drone.model';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DroneEntity } from 'src/entities/drone.entity';
 import { Repository } from 'typeorm';
+import { Request } from 'express';
 
 @Injectable()
 export class DroneService {
@@ -10,24 +11,46 @@ export class DroneService {
     @InjectRepository(DroneEntity) private droneRepo: Repository<DroneEntity>,
   ) {}
 
-  async getAll() {
-    const drones = await this.droneRepo.find();
+  async getAll(request: Request) {
+    const { query } = request;
+    const { orderby = 'name', direction = 'ASC' } = query;
+    const { name, fly, status } = query;
+    console.log({ name, fly, status });
+    const order: 'ASC' | 'DESC' = direction == 'DESC' ? 'DESC' : 'ASC';
+    const page = Number(query.page) == 0 ? 1 : Number(query.page);
+    const offset = (page - 1) * 5;
+
+    let queryBuild = await this.droneRepo
+      .createQueryBuilder()
+      .where('name like :name', {
+        name: `%${name === undefined ? '' : name}%`,
+      });
+    if (fly !== undefined && Number(fly) !== 0) {
+      queryBuild = queryBuild.andWhere(`fly = :fly`, { fly: Number(fly) });
+    }
+    if (status !== undefined && status !== '') {
+      queryBuild = queryBuild.andWhere(`status = :status`, { status });
+    }
+    queryBuild = queryBuild
+      .limit(5)
+      .offset(offset)
+      .orderBy(orderby.toString(), order);
+    const drones = await queryBuild.getMany();
 
     const serializedDrones = drones.map(drone => {
       return {
-        id: drone.id,
+        ...drone,
         image: `http://localhost:${process.env.PORT}/files/${drone.image}`,
-        name: drone.name,
-        address: drone.address,
-        battery: drone.battery,
-        max_speed: drone.max_speed,
-        average_speed: drone.average_speed,
-        status: drone.status,
-        fly: drone.fly,
       };
     });
 
-    return serializedDrones;
+    const total = await this.droneRepo
+      .createQueryBuilder()
+      .select()
+      .getCount();
+
+    let totalPages = Math.ceil(total / 5);
+    return { total, page, totalPages, serializedDrones };
   }
 
   async saveDrone(data: StoreDTO, image: any) {

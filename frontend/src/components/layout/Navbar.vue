@@ -1,23 +1,18 @@
 <template>
   <b-navbar toggleable="lg" type="dark" class="my-navbar">
-    <b-navbar-brand href="#">
-    </b-navbar-brand>
-      <router-link to="/">
-        <img :src="logo" class="logo"/>
-      </router-link>
+    <b-navbar-brand href="#"></b-navbar-brand>
+    <router-link to="/">
+      <img
+        src="https://user-images.githubusercontent.com/10083265/91772328-0f84e200-ebbb-11ea-81ce-2c4685405d82.png"
+        class="logo"
+      />
+    </router-link>
   </b-navbar>
 </template>
 
 <script>
-import Image from '../../assets/logo.svg';
-
 export default {
   name: 'Navbar',
-  data() {
-    return {
-      logo: Image,
-    };
-  },
 };
 </script>
 
@@ -29,7 +24,7 @@ export default {
   align-items: center;
   margin-bottom: 1rem;
 }
-.logo{
+.logo {
   width: 218.12px;
   height: 45.375px;
 }

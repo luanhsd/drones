@@ -9,19 +9,22 @@ import {
   ValidationPipe,
   UseInterceptors,
   UploadedFile,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { DroneService } from './drone.service';
 import { StoreDTO, UpdateDTO } from '../models/drone.model';
 import { FileInterceptor } from '@nestjs/platform-express/multer';
 import multer from '../config/multer';
+import { Request } from 'express';
 
 @Controller('drones')
 export class DroneController {
   constructor(private droneService: DroneService) {}
 
   @Get()
-  index() {
-    return this.droneService.getAll();
+  index(@Req() request: Request) {
+    return this.droneService.getAll(request);
   }
 
   @Get('/:id')
