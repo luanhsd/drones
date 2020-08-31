@@ -181,8 +181,8 @@ export default {
       data.append('battery', this.drone.battery);
       data.append('max_speed', this.drone.max_speed);
       data.append('average_speed', this.drone.average_speed);
-      data.append('status', this.status);
-      data.append('fly',this.drone.fly);
+      data.append('status', this.drone.status);
+      data.append('fly', this.drone.fly);
       return data;
     },
   },
