@@ -6,6 +6,7 @@ import * as path from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.setGlobalPrefix('api');
   app.use('/files', express.static(path.resolve(__dirname, '..', 'uploads')));
   await app.listen(process.env.PORT || 3333);

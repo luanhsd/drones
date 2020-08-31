@@ -1,5 +1,11 @@
 <template>
   <b-overlay :show="loading" rounded="sm">
+    <a @click="goBack" class="h2 mb2 btn-go-back">
+      <b-icon
+        icon="arrow-left-circle-fill"
+        variant="primary"
+      />
+    </a>
     <b-form @submit="onSubmit">
       <b-form-group
         id="image-group"
@@ -9,7 +15,7 @@
           id="image"
           type="file"
           name="image"
-          v-model="drone.image"
+          @change="fileUploadHandler"
           placeholder="Arquivos Permitidos: .png, .jpeg ou .jpg"/>
       </b-form-group>
 
@@ -22,7 +28,6 @@
           name="name"
           type="text"
           v-model="drone.name"
-          required
           placeholder="João das Neves"/>
       </b-form-group>
 
@@ -35,7 +40,6 @@
         id="address"
         type="text"
         v-model="drone.address"
-        required
         placeholder="Rua dos Alfeneiros, nº4"/>
       </b-form-group>
       <b-row>
@@ -48,7 +52,7 @@
                 id="battery"
                 name="battery"
                 type="text"
-                v-model="drone.battery"
+                v-model.number="drone.battery"
                 placeholder="100"/>
           </b-form-group>
         </b-col>
@@ -61,7 +65,7 @@
                 id="velomax"
                 name="max_speed"
                 type="text"
-                v-model="drone.max_speed"
+                v-model.number="drone.max_speed"
                 placeholder="3.5"/>
           </b-form-group>
         </b-col>
@@ -73,7 +77,7 @@
               <b-form-input
                 id="veloaver"
                 type="text"
-                v-model="drone.average_speed"
+                v-model.number="drone.average_speed"
                 name="average_speed"
                 placeholder="3.5"/>
           </b-form-group>
@@ -87,9 +91,8 @@
             label-for="status">
             <b-form-select
               id="status"
-              :value="drone.status"
               name="status"
-              v-model="statusSelected"
+              v-model="drone.status"
               :options="options"/>
           </b-form-group>
         </b-col>
@@ -102,7 +105,7 @@
                 id="fly"
                 type="text"
                 name="fly"
-                v-model="drone.fly"
+                v-model.number="drone.fly"
                 placeholder="90"/>
           </b-form-group>
         </b-col>
@@ -111,16 +114,16 @@
       <div class="buttons-group">
         <b-button v-if="verifyParams" type="submit" variant="primary">Salvar</b-button>
         <b-button v-else type="submit" variant="primary">Atualizar</b-button>
-        <b-button type="reset" variant="light">Cancelar</b-button>
+        <b-button to="/" variant="light">Cancelar</b-button>
       </div>
       <div class="validation-group">
         <b-alert
-          v-for="(validation, index) in validations"
-          :key="index"
           variant="danger"
           class="validation-alert"
+          v-for="(message,index) in messages"
+          :key="index"
           show>
-          Success Alert
+          {{ message }}
         </b-alert>
       </div>
     </b-form>
@@ -128,15 +131,17 @@
 </template>
 
 <script>
+
 export default {
   name: 'FromDrones',
   data() {
     return {
-      validations: [],
-      drone: {},
       loading: false,
+      messages: {},
       id: this.$route.params.id,
-      statusSelected: null,
+      drone: {},
+      image: null,
+      status: null,
       options: [
         { value: null, text: 'Selecione...' },
         { value: 'success', text: 'SUCCESS' },
@@ -149,18 +154,45 @@ export default {
     };
   },
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     onSubmit(event) {
       event.preventDefault();
       this.loading = true;
-      this.$api.post('/drones')
+      const data = this.setData();
+      this.$api.post('/drones', data)
         .then((response) => {
           console.log(response);
+        })
+        .catch((error) => {
+          this.messages = error.response.data.message;
         });
+      this.loading = false;
+    },
+    fileUploadHandler(event) {
+      [this.image] = event.target.files;
+    },
+    setData() {
+      const data = new FormData();
+      data.append('image', this.image);
+      data.append('name', this.drone.name);
+      data.append('address', this.drone.address);
+      data.append('battery', this.drone.battery);
+      data.append('max_speed', this.drone.max_speed);
+      data.append('average_speed', this.drone.average_speed);
+      data.append('status', this.status);
+      data.append('fly',this.drone.fly);
+      return data;
     },
   },
   created() {
     if (this.id !== undefined) {
-      this.$api.get(`/drones/${this.id}`)
+      this.$api.get(`/drones/${this.id}`, {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      })
         .then((response) => {
           if (response.data) {
             this.drone = response.data;
@@ -195,5 +227,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.btn-go-back{
+  cursor: pointer;
 }
 </style>

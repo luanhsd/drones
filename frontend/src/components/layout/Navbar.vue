@@ -2,7 +2,9 @@
   <b-navbar toggleable="lg" type="dark" class="my-navbar">
     <b-navbar-brand href="#">
     </b-navbar-brand>
-      <img :src="logo" class="logo"/>
+      <router-link to="/">
+        <img :src="logo" class="logo"/>
+      </router-link>
   </b-navbar>
 </template>
 
