@@ -7,36 +7,47 @@ import {
   Max,
   IsOptional,
   IsEmpty,
+  IsNumberString,
+  Contains
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class StoreDTO {
   @IsEmpty({ message: 'campo id não pode ser preenchido!' })
   id: number;
 
-  @IsNotEmpty({ message: 'campo name obrigatório' })
-  @IsString({ message: 'campo name precisa ser uma string' })
+  @IsNotEmpty({ message: 'campo nome obrigatório' })
+  @IsString({ message: 'campo nome inválido' })
   name: string;
 
-  @IsNotEmpty({ message: 'campo address obrigatório' })
-  @IsString({ message: 'campo address precisa ser uma string' })
+  @IsNotEmpty({ message: 'campo endereço obrigatório' })
+  @IsString({ message: 'campo endereço inválido' })
   address: string;
 
-  @IsInt({ message: 'campo battery precisa ser um número inteiro' })
-  @Min(0, { message: 'campo battery precisa ser no mínimo 0' })
-  @Max(100, { message: 'campo battery precisa ser no máxio 100' })
+  @IsInt({ message: 'campo bateria precisa ser um número inteiro' })
+  @Min(0, { message: 'campo bateria precisa ser no mínimo 0' })
+  @Max(100, { message: 'campo bateria precisa ser no máxio 100' })
+  @Type(() => Number)
   battery = 0;
 
-  @IsNumber({}, { message: 'campo max_speed precisa ser um número' })
+  @IsNumber({}, { message: 'campo velocidade máxima precisa ser um número' })
+  @Type(() => Number)
   max_speed = 0.0;
 
-  @IsNumber({}, { message: 'campo average_speed precisa ser um número' })
+  @IsNumber({}, { message: 'campo velocidade média precisa ser um número' })
+  @Type(() => Number)
   average_speed = 0.0;
 
   @IsString({ message: 'campo status precisa ser uma string' })
   status = 'offline';
 
-  @IsInt({ message: 'campo fly precisa ser um número inteiro' })
+  //@IsInt({ message: 'campo fly precisa ser um número inteiro' })
+  @IsNumber({},{message:"campo voo atual precisa ser um número inteiro"})
+  @Min(0,{ message: 'campo voo atual precisa ser no mínimo 0' })
+  @Max(100, { message: 'campo voo atual precisa ser no máxio 100' })
+  @Type(() => Number)
   fly = 0;
+  
 }
 
 export class UpdateDTO {
