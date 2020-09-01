@@ -1,4 +1,4 @@
 export const GET_DRONES = 'GET_DRONES';
-export const SAVE_DRONE = 'SAVE_DRONE';
-export const UPDATE_DRONE = 'UPDATE_DRONE';
-export const DELETE_DRONE = 'DELETE_DRONE';
+export const GET_TOTAL = 'GET_TOTAL';
+export const GET_PAGE = 'GET_PAGE';
+export const GET_TOTALPAGES = 'GET_TOTALPAGES';

@@ -9,7 +9,7 @@
     </router-link>
       <b-icon
         class="bt-details-delete h3 mb-2"
-        v-b-modal.delete
+        @click="$bvModal.show('modal-delete-confirm')"
         icon="trash"
         variant="danger"
       />
@@ -22,7 +22,7 @@
     </router-link>
     <b-container fluid class="my-drone-card">
       <b-img
-      :src="drone.image"
+      :src="verifyImage"
       fluid rounded="circle"
       class="drone-image"/>
     </b-container>
@@ -35,8 +35,34 @@
       <b-list-group-item><b>Status: </b>{{ drone.status }}</b-list-group-item>
       <b-list-group-item><b>Current Fly: </b>{{ drone.fly }}</b-list-group-item>
     </b-list-group>
-    <b-modal id="delete">
-      <p class="my-4">Tem certeza que deseja excluir ?</p>
+    <b-modal id="modal-delete-confirm" hide-footer hide-header>
+      <div class="d-block text-center">
+        <p>Tem certeza que deseja remover o registro?</p>
+      </div>
+      <b-container class="button-delete-modal">
+        <b-button
+          class="mt-3"
+          variant="danger"
+          @click="deleteRegister">
+            Excluir
+        </b-button>
+        <b-button
+          class="mt-3"
+          @click="$bvModal.hide('modal-delete-confirm')">
+            Cancelar
+        </b-button>
+      </b-container>
+    </b-modal>
+    <b-modal id="modal-error-delete" hide-footer hide-header>
+      <div class="d-block text-center">
+        <p>Falha ao excluir. Registro já deletado ou não existe!</p>
+      </div>
+      <b-button
+        class="mt-3"
+        block
+        @click="goBack">
+          Fechar
+      </b-button>
     </b-modal>
   </div>
 </template>
@@ -51,6 +77,29 @@ export default {
       drone: {},
       user: Image,
     };
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
+    deleteRegister() {
+      this.$api.delete(`/drones/${this.drone.id}`)
+        .then(() => {
+          this.$bvModal.hide('modal-delete-confirm');
+          this.goBack();
+        })
+        .catch(() => {
+          this.$bvModal.show('modal-error-delete');
+        });
+    },
+  },
+  computed: {
+    verifyImage() {
+      if (this.drone.image.match(/\.(jpeg|jpg|gif|png)$/) != null) {
+        return this.drone.image;
+      }
+      return Image;
+    },
   },
   created() {
     const { id } = this.$route.params;
@@ -95,5 +144,9 @@ export default {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 1.25rem;
+}
+.button-delete-modal{
+  display: flex;
+  justify-content: space-around;
 }
 </style>

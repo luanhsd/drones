@@ -1,6 +1,6 @@
 <template>
   <div class="bar-container">
-    <b-input type="range" size="sm" :value="value" min="0" max="100" step="1" />
+    <b-input type="range" size="sm" :value="value" min="0" max="100" step="1" disabled/>
   </div>
 </template>
 

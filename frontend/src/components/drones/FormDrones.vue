@@ -1,5 +1,5 @@
 <template>
-  <b-overlay :show="loading" rounded="sm">
+  <b-overlay :show="loading" rounded="sm" spinner-variant="primary">
     <a @click="goBack" class="h2 mb2 btn-go-back">
       <b-icon
         icon="arrow-left-circle-fill"
@@ -28,6 +28,7 @@
           name="name"
           type="text"
           v-model="drone.name"
+          required
           placeholder="João das Neves"/>
       </b-form-group>
 
@@ -40,6 +41,7 @@
         id="address"
         type="text"
         v-model="drone.address"
+        required
         placeholder="Rua dos Alfeneiros, nº4"/>
       </b-form-group>
       <b-row>
@@ -53,6 +55,7 @@
                 name="battery"
                 type="text"
                 v-model.number="drone.battery"
+                required
                 placeholder="100"/>
           </b-form-group>
         </b-col>
@@ -66,6 +69,7 @@
                 name="max_speed"
                 type="text"
                 v-model.number="drone.max_speed"
+                required
                 placeholder="3.5"/>
           </b-form-group>
         </b-col>
@@ -79,6 +83,7 @@
                 type="text"
                 v-model.number="drone.average_speed"
                 name="average_speed"
+                required
                 placeholder="3.5"/>
           </b-form-group>
         </b-col>
@@ -92,7 +97,7 @@
             <b-form-select
               id="status"
               name="status"
-              v-model="drone.status"
+              v-model="status"
               :options="options"/>
           </b-form-group>
         </b-col>
@@ -106,6 +111,7 @@
                 type="text"
                 name="fly"
                 v-model.number="drone.fly"
+                required
                 placeholder="90"/>
           </b-form-group>
         </b-col>
@@ -141,14 +147,13 @@ export default {
       id: this.$route.params.id,
       drone: {},
       image: null,
-      status: null,
+      status: 'offline',
       options: [
-        { value: null, text: 'Selecione...' },
+        { value: 'offline', text: 'OFFLINE' },
         { value: 'success', text: 'SUCCESS' },
         { value: 'delayed', text: 'DELAYED' },
         { value: 'flying', text: 'FLYING' },
         { value: 'fail', text: 'FAIL' },
-        { value: 'offline', text: 'OFFLINE' },
         { value: 'charging', text: 'CHARGING' },
       ],
     };
@@ -161,13 +166,29 @@ export default {
       event.preventDefault();
       this.loading = true;
       const data = this.setData();
-      this.$api.post('/drones', data)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          this.messages = error.response.data.message;
-        });
+      if (this.verifyParams) {
+        this.$api.post('/drones', data)
+          .then((response) => {
+            if (response.data) {
+              this.$store.dispatch('getDrones');
+              this.goBack();
+            }
+          })
+          .catch((error) => {
+            this.messages = error.response.data.message;
+          });
+      } else {
+        this.$api.put(`drones/${this.id}`, data)
+          .then((response) => {
+            if (response.data) {
+              this.$store.dispatch('getDrones');
+              this.goBack();
+            }
+          })
+          .catch((error) => {
+            this.messages = error.response.data.message;
+          });
+      }
       this.loading = false;
     },
     fileUploadHandler(event) {
@@ -175,13 +196,15 @@ export default {
     },
     setData() {
       const data = new FormData();
-      data.append('image', this.image);
+      if (this.image !== null) {
+        data.append('image', this.image);
+      }
       data.append('name', this.drone.name);
       data.append('address', this.drone.address);
       data.append('battery', this.drone.battery);
       data.append('max_speed', this.drone.max_speed);
       data.append('average_speed', this.drone.average_speed);
-      data.append('status', this.drone.status);
+      data.append('status', this.status);
       data.append('fly', this.drone.fly);
       return data;
     },

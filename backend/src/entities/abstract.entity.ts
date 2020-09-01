@@ -1,10 +1,4 @@
-import {
-  BaseEntity,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { Exclude } from 'class-transformer';
+import { BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 
 export abstract class AbstractEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
