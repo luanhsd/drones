@@ -175,7 +175,12 @@ export default {
             }
           })
           .catch((error) => {
-            this.messages = error.response.data.message;
+            const { message } = error.response.data;
+            if (typeof message === 'string' || message instanceof String) {
+              this.messages = [message];
+            } else {
+              this.messages = message;
+            }
           });
       } else {
         this.$api.put(`drones/${this.id}`, data)
@@ -186,7 +191,12 @@ export default {
             }
           })
           .catch((error) => {
-            this.messages = error.response.data.message;
+            const { message } = error.response.data;
+            if (typeof message === 'string' || message instanceof String) {
+              this.messages = [message];
+            } else {
+              this.messages = message;
+            }
           });
       }
       this.loading = false;
@@ -199,8 +209,8 @@ export default {
       if (this.image !== null) {
         data.append('image', this.image);
       }
-      data.append('name', this.drone.name);
-      data.append('address', this.drone.address);
+      data.append('name', this.drone.name.trim());
+      data.append('address', this.drone.address.trim());
       data.append('battery', this.drone.battery);
       data.append('max_speed', this.drone.max_speed);
       data.append('average_speed', this.drone.average_speed);
@@ -211,11 +221,7 @@ export default {
   },
   created() {
     if (this.id !== undefined) {
-      this.$api.get(`/drones/${this.id}`, {
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      })
+      this.$api.get(`/drones/${this.id}`)
         .then((response) => {
           if (response.data) {
             this.drone = response.data;
