@@ -55,3 +55,12 @@ $ yarn start:dev
 # production mode
 $ yarn start:prod
 ```
+
+## Documentação
+```bash
+# development
+http://localhost:<port>/api/
+
+#production mode
+http://<address>/api/
+```

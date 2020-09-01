@@ -61,9 +61,9 @@
               @change="getDataHandler()"
               v-model="orderBy"
               :options="orderByOptions"
-              class="w-75">
+              class="w-50">
               <template v-slot:first>
-                <option value="">-- none --</option>
+                <option value="">Nenhum</option>
               </template>
             </b-form-select>
             <b-form-select
@@ -123,7 +123,7 @@
     </b-row>
     <b-modal id="modal-erro-search" hide-footer hide-header>
       <div class="d-block text-center">
-        <p>Drone não encontrado. Favor verificar sua identificação!</p>
+        <p>Drone não encontrado!</p>
       </div>
       <b-button
         variant="primary"

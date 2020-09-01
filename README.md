@@ -17,7 +17,7 @@
 - [x] Validação de Dados
 - [x] Upload de Imagens do Usuário
 
-## Requisitos Não Funcionais
+## Tecnologias
 
 - [x] NodeJS
 - [x] NestJS
@@ -35,3 +35,4 @@
 - [x] VueX
 - [x] VueRouter
 - [x] Multer
+- [x] Swagger
