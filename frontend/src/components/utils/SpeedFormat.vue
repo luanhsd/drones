@@ -22,7 +22,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: baseline;
-  font-family: "Fira Code";
+  font-family: 'Fira Code';
 }
 .number {
   font-size: 1.5rem;

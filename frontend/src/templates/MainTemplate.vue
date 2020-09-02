@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-    <navbar/>
+    <navbar />
     <b-container fluid class="main-container">
-      <slot/>
+      <slot />
     </b-container>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style>
-.main-container{
+.main-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;

@@ -4,7 +4,7 @@
       <b-row align-h="center">
         <b-col cols="8">
           <b-card>
-            <card-drones/>
+            <card-drones />
           </b-card>
         </b-col>
       </b-row>

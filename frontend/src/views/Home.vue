@@ -1,6 +1,6 @@
 <template>
   <main-template>
-    <drone-table/>
+    <drone-table />
   </main-template>
 </template>
 

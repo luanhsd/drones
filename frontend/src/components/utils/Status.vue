@@ -1,5 +1,7 @@
 <template>
-  <b-alert show :variant="statusToColor" class="mb-0 my-alert">{{value}}</b-alert>
+  <b-alert show :variant="statusToColor" class="mb-0 my-alert">{{
+    value
+  }}</b-alert>
 </template>
 
 <script>

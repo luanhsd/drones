@@ -1,6 +1,15 @@
 <template>
   <div class="bar-container">
-    <b-input type="range" size="sm" :value="value" min="0" max="100" step="1" disabled/>
+    <b-input
+      class="input-fly-range"
+      type="range"
+      size="sm"
+      :value="value"
+      min="0"
+      max="100"
+      step="1"
+      disabled
+    />
   </div>
 </template>
 
@@ -29,5 +38,14 @@ export default {
 .bar-container {
   position: relative;
   top: 0.3rem;
+}
+.input-fly-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 2px solid #ffffff;
+  height: 22px;
+  width: 22px;
+  border-radius: 50%;
+  background: linear-gradient(#2196f3, #007bff);
+  margin-top: -9px;
 }
 </style>
