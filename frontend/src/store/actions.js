@@ -3,7 +3,12 @@ import api from '../services/api';
 
 export const getDrones = ({ commit }) => {
   api
-    .get('drones')
+    .get('drones', {
+      params: {
+        orderby: 'id',
+        direction: 'ASC',
+      },
+    })
     .then((response) => {
       commit(types.GET_DRONES, response.data.serializedDrones);
       commit(types.GET_TOTAL, response.data.total);
