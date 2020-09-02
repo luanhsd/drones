@@ -3,37 +3,37 @@
     <b-row class="filter-form">
       <b-form inline>
         <b-button to="/new" variant="success" class="new-drone">Novo</b-button>
-        <label class="sr-only" for="inline-form-input-name">Drone ID</label>
+        <label class="sr-only" for="id">Drone ID</label>
         <b-input
           :disabled="name !== '' || fly !== '' || status !== ''"
-          id="inline-form-input-name"
+          id="id"
           class="mb-2 mr-sm-2 mb-sm-0"
           placeholder="Drone ID"
           v-model.number="id"
         />
-        <label class="sr-only" for="inline-form-input-username">Name</label>
+        <label class="sr-only" for="name">Name</label>
         <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
           <b-input
             :disabled="id !== ''"
             v-model="name"
-            id="inline-form-input-username"
+            id="name"
             placeholder="Name"
           />
         </b-input-group>
 
-        <label class="sr-only" for="inline-form-input-username"
+        <label class="sr-only" for="fly"
           >Current Fly</label
         >
         <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
           <b-input
             :disabled="id !== ''"
             v-model="fly"
-            id="inline-form-input-username"
+            id="fly"
             placeholder="Current Fly"
           />
         </b-input-group>
 
-        <label class="sr-only" for="inline-form-input-username">Status</label>
+        <label class="sr-only" for="status">Status</label>
         <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
           <b-form-select
             :disabled="id !== ''"
