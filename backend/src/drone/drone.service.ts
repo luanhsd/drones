@@ -61,9 +61,15 @@ export class DroneService {
   }
 
   async findById(id: number) {
-    const drone = await this.droneRepo.findOne({ where: { id } });
-    drone.image = `http://localhost:${process.env.PORT}/files/${drone.image}`;
-    return drone;
+    try {
+      const drone = await this.droneRepo.findOne({ where: { id } });
+      drone.image = `http://localhost:${process.env.PORT}/files/${drone.image}`;
+      return drone;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'Drone não encontrado. verificar id !',
+      );
+    }
   }
 
   async updateDrone(id: number, data: UpdateDTO, image: any) {
@@ -77,7 +83,6 @@ export class DroneService {
         return await this.findById(id);
       }
     } catch (error) {
-      console.log(error);
       throw new InternalServerErrorException(
         'favor verificar estrutura de dados',
       );

@@ -43,7 +43,7 @@
             :options="options"
           />
         </b-input-group>
-        <b-overlay :show="searchLoading" rounded="sm" spinner-variant="primary">
+        <b-overlay :show="loading" rounded="sm" spinner-variant="primary">
           <b-button v-if="id === ''" @click="getDataHandler()" variant="primary"
             >Filtrar</b-button
           >
@@ -165,7 +165,6 @@ export default {
       fly: '',
       status: '',
       loading: false,
-      searchLoading: false,
       filtered: false,
       orderBy: null,
       direction: 'ASC',
@@ -210,10 +209,10 @@ export default {
         .catch((error) => {
           console.log(error.response.data.message);
         });
-      this.loading = false;
+      // this.loading = false;
     },
     search() {
-      this.searchLoading = true;
+      this.loading = true;
       if (Number.isInteger(this.id)) {
         this.$api
           .get(`/drones/${this.id}`)
@@ -226,10 +225,10 @@ export default {
       } else {
         this.$bvModal.show('modal-erro-search');
       }
-      this.searchLoading = false;
+      this.loading = false;
     },
     getDataHandler(page = this.page) {
-      this.searchLoading = true;
+      this.loading = true;
       this.$api
         .get('drones', {
           params: {
@@ -244,7 +243,7 @@ export default {
         .then((response) => {
           this.$store.dispatch('getDronesParams', response.data);
         });
-      this.searchLoading = false;
+      this.loading = false;
     },
   },
   computed: {
