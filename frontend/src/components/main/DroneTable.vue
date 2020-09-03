@@ -273,7 +273,4 @@ export default {
   justify-content: space-between;
   align-items: inherit;
 }
-.sort-pag .pagination {
-  background: #7159c1;
-}
 </style>
