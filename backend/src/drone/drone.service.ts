@@ -34,7 +34,10 @@ export class DroneService {
     const serializedDrones = drones.map(drone => {
       return {
         ...drone,
-        image: `http://localhost:${process.env.PORT}/files/${drone.image}`,
+        image:
+          process.env.STORAGE_TYPE === 's3'
+            ? `https://ondrone.s3.amazonaws.com/${drone.image}`
+            : `http://localhost:${process.env.PORT}/files/${drone.image}`,
       };
     });
 
@@ -46,9 +49,12 @@ export class DroneService {
     try {
       const drone = this.droneRepo.create(data);
       if (image !== undefined) {
-        drone.image = image.filename;
+        drone.image = image.filename || image.key;
         await drone.save();
-        drone.image = `http://localhost:${process.env.PORT}/files/${drone.image}`;
+        drone.image =
+          process.env.STORAGE_TYPE === 's3'
+            ? image.location
+            : `http://localhost:${process.env.PORT}/files/${drone.image}`;
         return drone;
       }
       await drone.save();
@@ -63,7 +69,10 @@ export class DroneService {
   async findById(id: number) {
     try {
       const drone = await this.droneRepo.findOne({ where: { id } });
-      drone.image = `http://localhost:${process.env.PORT}/files/${drone.image}`;
+      drone.image =
+        process.env.STORAGE_TYPE === 's3'
+          ? `https://ondrone.s3.amazonaws.com/${drone.image}`
+          : `http://localhost:${process.env.PORT}/files/${drone.image}`;
       return drone;
     } catch (error) {
       throw new InternalServerErrorException(
@@ -76,7 +85,10 @@ export class DroneService {
     try {
       if (image !== undefined) {
         //data.image = image.filename;
-        await this.droneRepo.update({ id }, { ...data, image: image.filename });
+        await this.droneRepo.update(
+          { id },
+          { ...data, image: image.filename || image.key },
+        );
         return await this.findById(id);
       } else {
         await this.droneRepo.update({ id }, { ...data });

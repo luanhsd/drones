@@ -36,3 +36,6 @@
 - [x] VueRouter
 - [x] Multer
 - [x] Swagger
+- [x] AWS S3
+- [x] Google Cloud - MySQL
+- [x] Heroku
