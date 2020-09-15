@@ -32,6 +32,16 @@ DATABASE_PORT=
 DATABASE_USER=
 DATABASE_PASSWORD=
 DATABASE_NAME=
+
+# s3: production mode
+# local: development mode
+STORAGE_TYPE=
+
+#S3 AWS
+BUCKET_NAME=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=
 ```
 
 ## Running the app
